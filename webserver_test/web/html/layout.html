@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebServer</title>
+        <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" href="/web/html/favicon.ico" />
+		<script src="/web/html/uikit.min.js"></script>
+		<link rel="stylesheet" href="/web/html/uikit.min.css"/>
+		<script src="/web/html/jquery-3.4.1.js"></script>
+    </head>
+    <body>
+	
+		<span id="datetime"></span>
+		<br>
+		<a href="#" onclick="runMonitor('mykey')"> click </a> <img alt="loading" id="spinnerPlay" src="progress_bar.gif" class="uk-invisible"/>
+		<script>
+			function showElement(elt,visible) {
+				if(visible){
+					//$('#'+elt).removeClass("uk-invisible");
+					document.getElementById(elt).classList.remove("uk-invisible");
+				} else {
+					document.getElementById(elt).classList.add("uk-invisible");
+				}
+			}
+			
+			function runMonitor(key){
+				showElement('spinnerPlay',true);
+				$.ajax({
+					url: '/runMonitor',
+					method: 'POST',
+					data: {
+						key: 'myKey', 
+					},
+					success: function(data){
+						showElement('spinnerPlay',false);
+						console.log("runMonitor / data" + JSON.stringify(data));
+					},
+					error: function (data, jqXHR, textStatus, errorThrown) { 
+						console.log("---data error: " + JSON.stringify(data) + " --- jqXHR "+ jqXHR + "  -  -- textStatus " + textStatus + "  --- errorThrown " + errorThrown)
+						showElement('spinnerPlay',false);
+					}
+				});
+				
+
+			}
+			var dt = new Date();
+			document.getElementById("datetime").innerHTML = dt.toLocaleString();
+		</script>
+    </body>
+</html>			
