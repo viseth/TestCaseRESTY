@@ -9,7 +9,7 @@ import (
 	"net"
 	"github.com/gin-gonic/gin"
 	"time"
-	"gopkg.in/urfave/cli.v1"
+	"github.com/urfave/cli"
 )
 
 var version string
